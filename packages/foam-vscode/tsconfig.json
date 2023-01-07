@@ -1,24 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "esModuleInterop": true,
     "outDir": "out",
-    "lib": [
-      "ES2019",
-      "es2020.string"
-    ],
-    "sourceMap": true,
     "strict": false,
-    "strictNullChecks": false,
     "downlevelIteration": true
   },
-  "include": [
-    "src",
-    "types"
-  ],
-  "exclude": [
-    "node_modules",
-    ".vscode-test"
-  ]
+  "include": ["src", "types"],
+  "exclude": ["node_modules", ".vscode-test"]
 }

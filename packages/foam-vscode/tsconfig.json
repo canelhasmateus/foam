@@ -1,11 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "node",
-    "esModuleInterop": true,
     "outDir": "out",
-    "lib": ["ES2019", "es2020.string"],
-    "sourceMap": true,
     "strict": false,
     "downlevelIteration": true
   },

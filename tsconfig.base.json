@@ -3,12 +3,13 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "baseUrl": ".",
     "module": "commonjs",
     "target": "ES2019",
-    "paths": {
-      "foam-core": ["./packages/foam-core/src"],
-      "foam-vscode": ["./packages/foam-vscode/src"]
-    }
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["ES2019", "es2020.string"],
+    "sourceMap": true,
+    "composite": true,
+    "strict": true,
   }
 }

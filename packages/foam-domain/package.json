@@ -1,0 +1,10 @@
+{
+  "name": "foam-domain",
+  "version": "0.0.1",
+  "license": "MIT",
+  "module": "out/index.js",
+  "types": "out/index.d.ts",
+  "scripts": {
+    "build": "tsc -p ./"
+  }
+}

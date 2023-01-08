@@ -1,81 +1,89 @@
-import { Maybe, } from "./global";
+import { Bag, brand, Update, } from "./global";
 
-declare const brand: unique symbol;
+
 export type Sync = { [ brand ]: "Sync" }
-export type Async = { [ brand ]: "Async" }
+type Trap<K> = ( event: K ) => Update<K>;
+type AnyTrap = Trap<any>
 
-export type Topic<Name, K, C extends Sync | Async> = {
+export type Async = { [ brand ]: "Async" }
+type Consumer<K> = ( e: K ) => void
+type AnyConsumer = Consumer<any>
+
+
+type Topic<K, C extends Sync | Async> = {
 	name: symbol;
 }
+type AnyTopic = Topic<any, any>
 
-export function createTopic<Name, K, C extends Sync | Async>(): Topic<Name, K, C> {
+export function createTopic<K, C extends Sync | Async>( name = "" ): Topic<K, C> {
 	return {
-		name: Symbol()
-	}
+		name: Symbol( name )
+	} as Topic<K, C>
 }
 
-export type SyncTopic<K> = Topic<any, K, Sync>;
-export type AsyncTopic<K> = Topic<any, K, Async>;
-type AnySyncTopic = SyncTopic<any>;
-type AnyAsyncTopic = AsyncTopic<any>;
-
-
+export type Payload<T> = T extends Topic<infer X, any> ? X : never;
 // Synchronous handling
-export type Adjustment<K> = ( event: K ) => Maybe<Partial<K>>;
 
-export interface Trap<T> {
-	id: symbol;
-	adjust: Adjustment<T>;
-
-}
-
-export function createTrap<K>( fn: Adjustment<K> ): Trap<K> {
-	return {
-		id:     Symbol(),
-		adjust: fn
-	}
-}
-
-// Asynchronous handling
-type BlackHole<K> = ( e: K ) => void;
-
-export interface Consumer<K> {
-	id: symbol;
-	notify: BlackHole<K>;
-}
-
-
-export function createConsumer<K>( fn: BlackHole<K> ): Consumer<K> {
-	return {
-		id:     Symbol(),
-		notify: fn
-	}
-}
-
-// Messaging
-export type TrapHandle = {
+type TrapHandle = {
 	[ brand ]: "TrapHandle";
 }
 
-export interface Interrupt<T extends AnySyncTopic> {
+type Trapable = Topic<any, Sync>
 
-	setup<K>( topic: T, trap: Trap<K> ): T extends SyncTopic<K> ? TrapHandle : never;
+interface Interrupt<T extends Trapable> {
 
-	trigger<K>( topic: T, message: K ): T extends SyncTopic<K> ? K : never;
+	setup<S extends T>( topic: T, trap: Trap<T> ): TrapHandle;
+
+	trigger<S extends T>( topic: T, message: Payload<T> ): Payload<T>;
 
 	disarm( pick: TrapHandle ): void;
 }
 
-//
-export type Subscription = {
-	[ brand ]: "Subscription";
+// Asynchronous handling
+type Subscription = [ AnyTopic, symbol, AnyConsumer ]
+type Consumable = Topic<any, Async>
+
+class MessageBus<T extends Consumable> {
+
+	//todo better bus
+	private consumers: Map<symbol, Subscription[]>;
+
+	constructor() {
+		this.consumers = new Map();
+	}
+
+	subscribe<S extends T>( topic: S, consumer: Consumer<Payload<S>> ): Subscription {
+		const subscription: Subscription = [ topic, Symbol(), consumer ]
+
+		const subscribers = this.consumers.get( topic.name );
+		const _           = subscribers
+							? subscribers.push( subscription )
+							: this.consumers.set( topic.name, [ subscription ] )
+
+		return subscription;
+	}
+
+	publish<S extends T>( topic: S, message: Payload<S> ): Promise<void> {
+		return new Promise( () => {
+			const subscribed = this.consumers.get( topic.name ) || []
+			for ( const [ __, _, consumer ] of subscribed ) {
+				consumer( message )
+			}
+		} )
+	}
+
+	cancel( subscription: Subscription ): void {
+		const [ topic, _, __ ] = subscription
+		const consumers        = this.consumers.get( topic.name ) || [];
+		this.consumers.set( topic.name, consumers.filter( ( s ) => {
+			return s === subscription;
+		} ) );
+	}
+
 }
 
-export interface MessageBus<T extends AnyAsyncTopic> {
-	subscribe<S extends AsyncTopic<K> & T, K>( topic: S, consumer: Consumer<K> ): Subscription;
 
-	publish<K>( topic: T, message: K ): T extends AsyncTopic<K> ? void : never;
-
-	cancel( subscription: Subscription ): void;
+export function createBus<T extends Bag<Consumable>>( topics: T ): MessageBus<T[keyof T]> {
+	return new MessageBus();
 }
 

@@ -103,7 +103,9 @@ async function run() {
 
 	await benchInspect( benchmark, 0, options )
 	await benchInspect( benchmark, 1000, options )
+	await benchInspect( benchmark, 10000, options )
 	await benchMutation( benchmark, 1000, options )
+	await benchMutation( benchmark, 10000, options )
 
 
 	console.log( benchmark.report() );
@@ -115,5 +117,5 @@ describe( "Events benchmark", () => {
 
 	test( "Events benchmark", async () => {
 		await run()
-	}, 10_000 )
+	}, 1_000_000 )
 } )

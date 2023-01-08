@@ -1,0 +1,36 @@
+yarn workspace v1.22.19
+yarn run v1.22.19
+$ jest  --testMatch  "**/*.bench.ts" --silent false LICENSE assets docs lerna.json node_modules package.json packages pbcopy readme.md tsconfig.base.json yarn-error.log yarn.lock
+  console.log
+    - - - - - - - - - - - - - - - - - Performance - - - - - - - - - - - - - - - - -
+    Topic Init:
+      0.00687 ms (+/- 0.00922 ms) from 1000 iterations
+    Intercept Init:
+      0.00173 ms (+/- 0.00014 ms) from 1000 iterations
+    Addition and Removal:
+      0.00158 ms (+/- 0.0002 ms) from 1000 iterations
+    0 inspect:
+      0.00123 ms (+/- 0.00011 ms) from 1000 iterations
+    1000 inspect:
+      0.00443 ms (+/- 0.0005 ms) from 1000 iterations
+    10000 inspect:
+      0.02134 ms (+/- 0.00227 ms) from 1000 iterations
+    1000 mutation:
+      0.17638 ms (+/- 0.00272 ms) from 1000 iterations
+    10000 mutation:
+      1.91834 ms (+/- 0.03524 ms) from 1000 iterations
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+      at run (src/events.bench.ts:111:10)
+
+PASS src/events.bench.ts
+  Events benchmark
+    ✓ Events benchmark (2190 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        3.566 s, estimated 4 s
+Ran all test suites matching /LICENSE|assets|docs|lerna.json|node_modules|package.json|packages|pbcopy|readme.md|tsconfig.base.json|yarn-error.log|yarn.lock/i.
+Done in 4.26s.
+Done in 4.44s.

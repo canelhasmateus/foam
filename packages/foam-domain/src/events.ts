@@ -2,7 +2,7 @@ export declare const brand: unique symbol;
 // Synchronous handling
 type CorcernTopic<K> = { name: Symbol, [ brand ]: "Concern" }
 type AnyConcern = CorcernTopic<any>
-type Content<K> = K extends CorcernTopic<infer X> ? X : never
+type Content<K> = K extends CorcernTopic<infer X> ? Readonly<X> : never
 type Advice<K> = ( event: K ) => Partial<K> | null | undefined;
 type Link = {
 	id: symbol;
@@ -39,7 +39,7 @@ class Intercept<T extends AnyConcern> {
 		for ( const { advice } of links ) {
 			const update = advice( result )
 			if ( update ) {
-				result = Object.assign( result, update )
+				Object.assign( result, update )
 			}
 		}
 
@@ -60,7 +60,7 @@ class Intercept<T extends AnyConcern> {
 // Asynchronous handling
 type MessageTopic<K> = { name: Symbol, [ brand ]: "Topic" }
 type AnyTopic = MessageTopic<any>
-type Payload<T> = T extends MessageTopic<infer X> ? X : never;
+type Payload<T> = T extends MessageTopic<infer X> ? Readonly<X> : never;
 type Consumer<K> = ( e: K ) => void
 type Subscription = {
 	id: symbol; topic: AnyTopic; subscribed: Consumer<any>;

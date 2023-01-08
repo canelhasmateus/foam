@@ -6,8 +6,8 @@
   "types": "out/index.d.ts",
   "scripts": {
     "build": "tsc -p ./",
-    "test": "jest --config 'jest.config.js' --testMatch \"**/*.test.ts\"",
-    "bench": "jest --config 'jest.config.js' --testMatch  \"**/*.bench.ts\" --silent false"
+    "test": "jest --testMatch \"**/*.test.ts\"",
+    "bench": "jest  --testMatch  \"**/*.bench.ts\" --silent false"
   },
   "devDependencies": {
     "@types/jest": "^29.2.5",
@@ -15,5 +15,9 @@
     "kelonio": "^0.8.0",
     "ts-jest": "^29.0.3",
     "typescript": "^4.9.4"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }

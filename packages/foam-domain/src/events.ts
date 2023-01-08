@@ -1,89 +1,130 @@
-import { Bag, brand, Update, } from "./global";
-
-
-export type Sync = { [ brand ]: "Sync" }
-type Trap<K> = ( event: K ) => Update<K>;
-type AnyTrap = Trap<any>
-
-export type Async = { [ brand ]: "Async" }
-type Consumer<K> = ( e: K ) => void
-type AnyConsumer = Consumer<any>
-
-
-type Topic<K, C extends Sync | Async> = {
-	name: symbol;
-}
-type AnyTopic = Topic<any, any>
-
-export function createTopic<K, C extends Sync | Async>( name = "" ): Topic<K, C> {
-	return {
-		name: Symbol( name )
-	} as Topic<K, C>
-}
-
-export type Payload<T> = T extends Topic<infer X, any> ? X : never;
+export declare const brand: unique symbol;
 // Synchronous handling
-
-type TrapHandle = {
-	[ brand ]: "TrapHandle";
+type CorcernTopic<K> = { name: Symbol, [ brand ]: "Concern" }
+type AnyConcern = CorcernTopic<any>
+type Content<K> = K extends CorcernTopic<infer X> ? X : never
+type Advice<K> = ( event: K ) => Partial<K> | null | undefined;
+type Link = {
+	id: symbol;
+	concern: AnyConcern;
+	advice: Advice<any>;
 }
 
-type Trapable = Topic<any, Sync>
+class Intercept<T extends AnyConcern> {
 
-interface Interrupt<T extends Trapable> {
-
-	setup<S extends T>( topic: T, trap: Trap<T> ): TrapHandle;
-
-	trigger<S extends T>( topic: T, message: Payload<T> ): Payload<T>;
-
-	disarm( pick: TrapHandle ): void;
-}
-
-// Asynchronous handling
-type Subscription = [ AnyTopic, symbol, AnyConsumer ]
-type Consumable = Topic<any, Async>
-
-class MessageBus<T extends Consumable> {
-
-	//todo better bus
-	private consumers: Map<symbol, Subscription[]>;
+	private links: Map<AnyConcern, Link[]>;
 
 	constructor() {
-		this.consumers = new Map();
+		this.links = new Map();
+	}
+
+
+	add<S extends T>( concern: S, advice: Advice<Content<S>> ): Link {
+		const link: Link = {
+			id:      Symbol(),
+			concern: concern,
+			advice:  advice
+		}
+
+		const links = this.links.get( concern );
+		links ? links.push( link )
+			  : this.links.set( concern, [ link ] );
+
+		return link;
+	}
+
+	inspect<S extends T>( concern: S, content: Content<S> ): Content<T> {
+		let result  = Object.assign( {}, content )
+		const links = this.links.get( concern ) || []
+		for ( const { advice } of links ) {
+			const update = advice( result )
+			if ( update ) {
+				result = Object.assign( result, update )
+			}
+		}
+
+		return result
+	};
+
+	remove( link: Link ): void {
+		const { concern } = link
+		const consumers   = this.links.get( concern ) || [];
+		this.links.set( concern, consumers.filter( el => {
+			return el.id !== link.id;
+		} ) )
+	};
+
+}
+
+
+// Asynchronous handling
+type MessageTopic<K> = { name: Symbol, [ brand ]: "Topic" }
+type AnyTopic = MessageTopic<any>
+type Payload<T> = T extends MessageTopic<infer X> ? X : never;
+type Consumer<K> = ( e: K ) => void
+type Subscription = {
+	id: symbol; topic: AnyTopic; subscribed: Consumer<any>;
+}
+
+class MessageBus<T extends AnyTopic> {
+
+	private subscriptions: Map<AnyTopic, Subscription[]>;
+
+	constructor() {
+		this.subscriptions = new Map();
 	}
 
 	subscribe<S extends T>( topic: S, consumer: Consumer<Payload<S>> ): Subscription {
-		const subscription: Subscription = [ topic, Symbol(), consumer ]
+		const subscription: Subscription = {
+			id:         Symbol(),
+			topic:      topic,
+			subscribed: consumer
+		}
 
-		const subscribers = this.consumers.get( topic.name );
-		const _           = subscribers
-							? subscribers.push( subscription )
-							: this.consumers.set( topic.name, [ subscription ] )
+		const subscribers = this.subscriptions.get( topic );
+		subscribers ? subscribers.push( subscription )
+					: this.subscriptions.set( topic, [ subscription ] );
 
 		return subscription;
 	}
 
 	publish<S extends T>( topic: S, message: Payload<S> ): Promise<void> {
 		return new Promise( () => {
-			const subscribed = this.consumers.get( topic.name ) || []
-			for ( const [ __, _, consumer ] of subscribed ) {
-				consumer( message )
+			const subscribers = this.subscriptions.get( topic ) || []
+			for ( const { subscribed } of subscribers ) {
+				subscribed( message )
 			}
 		} )
 	}
 
 	cancel( subscription: Subscription ): void {
-		const [ topic, _, __ ] = subscription
-		const consumers        = this.consumers.get( topic.name ) || [];
-		this.consumers.set( topic.name, consumers.filter( ( s ) => {
-			return s === subscription;
+		const { topic } = subscription
+		const consumers = this.subscriptions.get( topic ) || [];
+		this.subscriptions.set( topic, consumers.filter( el => {
+			return el.id !== subscription.id;
 		} ) );
 	}
 
 }
 
+//
 
-export function createBus<T extends Bag<Consumable>>( topics: T ): MessageBus<T[keyof T]> {
+type Bag<T> = T[keyof T] extends infer K ? K : never
+
+
+export function createMessageTopic<K>(): MessageTopic<K> {
+	return { name: Symbol() } as unknown as MessageTopic<K>
+}
+
+export function createConcernTopic<K>(): CorcernTopic<K> {
+	return { name: Symbol() } as unknown as CorcernTopic<K>
+}
+
+export function createBus<T extends { [ _: string ]: AnyTopic }>( topics: T ): MessageBus<T[keyof T]> {
 	return new MessageBus();
+}
+
+export function createIntercept<T extends { [ _: string ]: AnyConcern }>( concerns: T ): Intercept<T[keyof T]> {
+	return new Intercept();
 }
 

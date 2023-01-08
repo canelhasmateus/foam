@@ -593,7 +593,7 @@ Fixes and Improvements:
 
 New Features:
 
-- Foam stays in sync with changes in notes
+- Foam stays in colour with changes in notes
 - Dataviz: Added multiple selection in graph (shift+click on node)
 
 Fixes and Improvements:

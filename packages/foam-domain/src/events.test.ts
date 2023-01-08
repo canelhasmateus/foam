@@ -54,3 +54,7 @@ class Exchange implements MessageBus<Topics> {
 }
 
 
+test(``, () => {
+
+	expect()
+})

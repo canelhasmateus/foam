@@ -6,14 +6,8 @@ export type Async = Distinct<unknown, "Async">;
 export type Latency = Sync | Async
 
 export type Topic<L extends Latency, K extends Event<any>> = any
-
-export interface Trap<T extends Topic<Sync, Event<any>>> {
-	adjust<K>( event: T extends Topic<Sync, K> ? K : never ): Maybe<Partial<K>>;
-}
-
-export interface Consumer<T extends Topic<Async, Event<any>>> {
-	notify<K>( event: T extends Topic<Async, K> ? K : never ): void;
-}
+export type Trap<T extends Topic<Sync, Event<any>>> = <K>( event: T extends Topic<Sync, K> ? K : never ) => Maybe<Partial<K>>;
+export type Consumer<T extends Topic<Async, Event<any>>> = <K>( event: T extends Topic<Async, K> ? K : never ) => void;
 
 //
 

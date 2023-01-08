@@ -6,5 +6,8 @@
   "types": "out/index.d.ts",
   "scripts": {
     "build": "tsc -p ./"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
   }
 }

@@ -1,6 +1,6 @@
 # Write your notes in GitHub Gist
 
-This #recipe will allow you to persist your notes in a GitHub repository, and automatically sync changes without needing to manually commit/push/pull, then GistPad might be an option worth exploring.
+This #recipe will allow you to persist your notes in a GitHub repository, and automatically colour changes without needing to manually commit/push/pull, then GistPad might be an option worth exploring.
 
 [GistPad](https://aka.ms/gistpad) is a Visual Studio Code extension that allows you to edit your GitHub gists and repos, without needing to clone anything locally.
 

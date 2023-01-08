@@ -1,4 +1,5 @@
-import { Async, Consumer, MessageBus, Sync, Topic, Trap } from "./events";
+import { Async, AsyncTopic, Consumer, createConsumer, createTopic, MessageBus, Subscription, Sync } from "./events";
+import * as console from "console";
 
 
 interface CurrencyRates {
@@ -7,54 +8,63 @@ interface CurrencyRates {
 	BRL: number;
 }
 
-type MarketOpen = Topic<Async, CurrencyRates>;
-type Transaction = Topic<Sync, CurrencyRates>;
-type RateUpdate = Topic<Sync | Async, CurrencyRates>;
+interface TransactionData {
+	USD: number;
+	EUR: number;
+	BRL: number;
+}
+
+const MarketOpen  = createTopic<"MarketOpen", CurrencyRates, Async>()
+const Transaction = createTopic<"Transaction", TransactionData, Sync | Async>()
+const RateUpdate  = createTopic<"RateUpdate", CurrencyRates, Sync>();
 
 
-type AsyncTopics = Transaction | MarketOpen
-type SyncTopics = Transaction | RateUpdate
-type Topics = AsyncTopics | SyncTopics
+type SyncTopics = typeof RateUpdate | typeof Transaction
+type AsyncTopics = typeof MarketOpen | typeof Transaction
 
 //
 
 
-class Exchange implements MessageBus<Topics> {
-	private traps: Map<Topics, Trap<Topics>[]>;
-	private consumers: Map<Topics, Consumer<Topics>[]>;
+class Webhooks implements MessageBus<AsyncTopics> {
+	//todo
+	private consumers: Map<symbol, Consumer<any>[]>;
 
 	constructor() {
-		this.traps     = new Map();
 		this.consumers = new Map();
 	}
 
-	set( topic: SyncTopics, trap: Trap<SyncTopics> ): any {
-		const old = this.traps.get( topic ) || []
-		this.traps.set( topic, [ ...old, trap ] )
-		return {
-			trap
+	subscribe<K, S extends AsyncTopic<K>>( topic: S, consumer: Consumer<K> ): Subscription {
+		const old = this.consumers.get( topic.name ) || []
+		this.consumers.set( topic.name, [ ...old, consumer ] )
+		return consumer.id as unknown as Subscription;
+	}
+	create< T extends AsyncTopics>( topic: T ): Subscription {
+		const old = this.consumers.get( topic.name ) || []
+		this.consumers.set( topic.name, [ ...old, consumer ] )
+		return consumer.id as unknown as Subscription;
+	}
+
+	publish<K>( topic: AsyncTopics, message: K ): void {
+		const interested = this.consumers.get( topic.name ) || []
+		for ( const consumer of interested ) {
+			consumer.notify( message )
 		}
 	}
 
-	disarm( pick: any ): void {
-		return undefined;
-	}
-
-	subscribe( topic: Topics, consumer: Consumer<Topics> ): any {
-		const old = this.consumers.get( topic ) || []
-		this.consumers.set( topic, [ ...old, consumer ] )
-		return [ topic, consumer ];
-	}
-
-	cancel( subscription: any ): void {
-		return undefined;
+	cancel( pick: Subscription ): void {
 	}
 
 
 }
 
+const liveChart = createConsumer( ( data: CurrencyRates ) => {
+	console.log( data )
+} );
+const regulator = createConsumer( ( data: TransactionData ) => {
+	console.log( data )
+} );
 
-test(``, () => {
+const chart = new Webhooks();
+chart.subscribe( MarketOpen, liveChart )
+chart.subscribe( MarketOpen, regulator )
 
-	expect()
-})

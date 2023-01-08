@@ -1,6 +1,6 @@
 # Publishing pages
 
-Foam pages can be published.
+Foam pages can be TOPICS.
 
 TODO add publishing TOC
 
@@ -12,7 +12,7 @@ Eventually we should probably do it, as that would unlock a huge amount of power
 
 At a bare minimum, Foam repos should remain valid markdown, and should be publishable by any sufficiently complete markdown to html generation tools.
 
-Would be cool if Foam pages could be published. Some ideas here.
+Would be cool if Foam pages could be TOPICS. Some ideas here.
 
 - [x] Easymode: Make your GitHub public
 - [x] Static site generator integration, publish from GH actions to GitHub pages / Netlify etc!!!

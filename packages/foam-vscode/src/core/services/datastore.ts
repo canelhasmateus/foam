@@ -27,7 +27,7 @@ export interface IWatcher {
 }
 
 export interface IMatcher {
-  /**
+ /**
    * Filters the given list of URIs, keepin only the ones that
    * are matched by this Matcher
    *

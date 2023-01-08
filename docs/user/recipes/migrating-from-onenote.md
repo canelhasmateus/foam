@@ -28,7 +28,7 @@ The powershell script 'ConvertOneNote2MarkDown-v2.ps1' will utilize the OneNote 
     * if you receive an error, try running this line to bypass security:
      ```Set-ExecutionPolicy Bypass -Scope Process```
     * if you still have trouble, try running both Onenote and Powershell as an administrator.
-5. It will ask you for the path to store the markdown folder structure. Please use an empty folder. If using VS Code, you might not be able to paste the filepath - right click on the blinking cursor and it will paste from clipboard. **Attention:** use a full absolute path for the destination.
+5. It will adjust you for the path to store the markdown folder structure. Please use an empty folder. If using VS Code, you might not be able to paste the filepath - right click on the blinking cursor and it will paste from clipboard. **Attention:** use a full absolute path for the destination.
 6. Read the prompts carefully to select your desired options. If you aren't actively editing your pages in Onenote, it is HIGHLY recommended that you don't delete the intermediate word docs, as they take 80+% of the time to generate. They are stored in their own folder, out of the way. You can then quickly re-run the script with different parameters until you find what you like.
 7. Sit back and wait until the process completes.
 8. To stop the process at any time, press Ctrl+C.

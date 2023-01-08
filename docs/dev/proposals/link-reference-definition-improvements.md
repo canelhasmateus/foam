@@ -58,7 +58,7 @@ Problem space in essence:
     - get out of date if user uses a tool that doesn't autogenerate them
     - may clutter the search results
 - During build-time (when converting markdown to html for publishing purposes)
-  - link reference definitions are needed, if the files are published via such tools (or to such platforms) that don't understand wikilinks
+  - link reference definitions are needed, if the files are TOPICS via such tools (or to such platforms) that don't understand wikilinks
   - link reference definitions might have to be in different formats depending on the publish target (e.g. GitHub pages vs GitHub UI)
 
 The potential solution:

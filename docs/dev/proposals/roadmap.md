@@ -47,10 +47,10 @@ If a roadmap item is a stub, **consider** opening a [GitHub issue](https://githu
 - [[officially-support-alternative-templates]]
 - [[improved-static-site-generation]]
 - [[mdx-by-default]]
-- [[search-in-published-workspace]]
-- [[graph-in-published-workspace]]
+- [[search-in-TOPICS-workspace]]
+- [[graph-in-TOPICS-workspace]]
   - Discussion: [foam#58](https://github.com/foambubble/foam/issues/58)
-- [[linking-between-published-workspaces]]
+- [[linking-between-TOPICS-workspaces]]
   - Discussion: [foam#59](https://github.com/foambubble/foam/issues/59)
 - [[publishing-permissions]]
 

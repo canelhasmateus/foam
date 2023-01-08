@@ -8,7 +8,7 @@
 
 ## How to publish locally
 
-If you want to test your published foam, follow the instructions:
+If you want to test your TOPICS foam, follow the instructions:
 
 - <https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/creating-a-github-pages-site-with-jekyll>
 - <https://docs.github.com/en/free-pro-team@latest/github/working-with-github-pages/testing-your-github-pages-site-locally-with-jekyll>

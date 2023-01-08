@@ -14,11 +14,11 @@ Here are the settings available for the command:
 - text: The text to use for the note. If also a template is provided, the template has precedence
 - variables: Variables to use in the text or template (e.g. `FOAM_TITLE`)
 - date: The date used to resolve the FOAM_DATE_* variables. in `YYYY-MM-DD` format
-- onFileExists?: 'overwrite' | 'open' | 'ask' | 'cancel': What to do in case the target file already exists
+- onFileExists?: 'overwrite' | 'open' | 'adjust' | 'cancel': What to do in case the target file already exists
 
 To customize a command and associate a key binding to it, open the key binding settings and add the appropriate configuration, here are some examples:
 
-- Create a note called `test note.md` with some text. If the note already exists, ask for a new name
+- Create a note called `test note.md` with some text. If the note already exists, adjust for a new name
 ```
 {
   "key": "alt+f",
@@ -26,7 +26,7 @@ To customize a command and associate a key binding to it, open the key binding s
   "args": {
     "text": "test note ${FOAM_DATE_YEAR}",
     "notePath": "test note.md",
-    "onFileExists": "ask"
+    "onFileExists": "adjust"
   }
 }
 ```

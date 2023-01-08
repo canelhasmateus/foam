@@ -1,4 +1,1 @@
-export class Placeholder {
-
-
-}
+export * from './events'

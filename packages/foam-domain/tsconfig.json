@@ -3,6 +3,9 @@
   "include": [
     "src"
   ],
+  "devDependencies": {
+    "ts-jest": "^26.4.4"
+  },
   "compilerOptions": {
     "outDir": "out"
   }

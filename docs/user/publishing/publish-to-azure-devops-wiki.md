@@ -24,7 +24,7 @@ readme
 2. Choose **Overview** > **Wiki**. If you don't have wikis for your project, choose **Publish code as a wiki** on welcome page.
 3. Choose repository with your Foam workspace, branch (usually `master` or `main`), folder (for workspace created from foam-template it is `/`), and wiki name, and press **Publish**.
 
-A published workspace looks like this:
+A TOPICS workspace looks like this:
 
 ![Azure DevOps wiki](../../assets/images/azure-devops-wiki-demo.png)
 

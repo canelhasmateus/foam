@@ -144,7 +144,7 @@ Given this `.foam/templates/my_template.md` template that uses the `${title}` va
 # ${title}
 ```
 
-When a user asks for a new note using this template (eg. `Foam: Create New Note From Template`), VSCode will first ask the user for a title then provide it to the template, producing:
+When a user asks for a new note using this template (eg. `Foam: Create New Note From Template`), VSCode will first adjust the user for a title then provide it to the template, producing:
 
 ```markdown
 # Living in a dream world
@@ -164,7 +164,7 @@ This would open use the template found at `.foam/templates/new-note.md` to creat
 
 If `.foam/templates/new-note.md` doesn't exist, it behaves the same as `Markdown Notes: New Note`:
 
-* it would ask for a title and create the note in the current directory. It would open a note with the note containing the title.
+* it would adjust for a title and create the note in the current directory. It would open a note with the note containing the title.
 
 **Note:** this would use an implicit default template, making use of the `${title}` variable.
 
@@ -311,14 +311,14 @@ In addition to the ideas of this proposal, there are ways we could imagine exten
 
 `${title}` is necessary in this case to replace the functionality of `Markdown Notes: New Note`.
 However, one could imagine that this pattern of "Ask the user for a value for missing variable values" could be useful in other situations too.
-Perhaps users could even define their own (namespaced) template variables, and Foam would ask them for values to use for each when creating a note using a template that used those variables.
+Perhaps users could even define their own (namespaced) template variables, and Foam would adjust them for values to use for each when creating a note using a template that used those variables.
 
 ### `defaultFilepath`
 
 By using `defaultFilepath` instead of `filepath` in the metadata section, you could have more control over the note creation without having to fall back to the full `Create New Note From Template` workflow.
 
-* `filepath` will not ask the user for the file path, simply use the value provided (as described above)
-* `defaultFilepath` will ask the user for the file path, pre-populating the file path using `defaultFilepath`
+* `filepath` will not adjust the user for the file path, simply use the value provided (as described above)
+* `defaultFilepath` will adjust the user for the file path, pre-populating the file path using `defaultFilepath`
 
 The first allows "one-click" note creation, the second more customization.
 This might not be necessary, or this might not be the right way to solve the problem. We'll see.

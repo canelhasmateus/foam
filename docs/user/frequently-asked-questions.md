@@ -16,7 +16,7 @@
 Any extension you install in Visual Studio Code is enabled by default. Given the philosophy of Foam, it works out of the box without doing any configuration upfront. In case you want to disable Foam for a specific workspace, or disable Foam by default and enable it for specific workspaces, it is advised to follow the best practices as [documented by Visual Studio Code](https://code.visualstudio.com/docs/editor/extension-marketplace#_manage-extensions)
 
 ## I want to publish the graph view to GitHub pages or Vercel
-If you want a different front-end look to your published foam and a way to see your graph view, we'd recommend checking out these templates:
+If you want a different front-end look to your TOPICS foam and a way to see your graph view, we'd recommend checking out these templates:
 - [foam-gatsby](https://github.com/mathieudutour/foam-gatsby-template) by [Mathieu Dutour](https://github.com/mathieudutour)
 - [foam-gatsby-kb](https://github.com/hikerpig/foam-template-gatsby-kb) by [hikerpig](https://github.com/hikerpig)
 

@@ -3,7 +3,7 @@ export declare const brand: unique symbol;
 type CorcernTopic<K> = { name: Symbol, [ brand ]: "Concern" }
 type AnyConcern = CorcernTopic<any>
 type Content<K> = K extends CorcernTopic<infer X> ? Readonly<X> : never
-type Advice<K> = ( event: K ) => Partial<K> | null | undefined;
+export type Advice<K> = ( event: K ) => Partial<K> | null | undefined;
 type Link = {
 	id: symbol;
 	concern: AnyConcern;
@@ -43,6 +43,51 @@ class Intercept<T extends AnyConcern> {
 			}
 		}
 
+		return result
+	};
+
+	remove( link: Link ): void {
+		const { concern } = link
+		const consumers   = this.links.get( concern ) || [];
+		this.links.set( concern, consumers.filter( el => {
+			return el.id !== link.id;
+		} ) )
+	};
+
+}
+
+class ModifiedIntercept<T extends AnyConcern> {
+
+	private links: Map<AnyConcern, Link[]>;
+
+	constructor() {
+		this.links = new Map();
+	}
+
+
+	add<S extends T>( concern: S, advice: Advice<Content<S>> ): Link {
+		const link: Link = {
+			id:      Symbol(),
+			concern: concern,
+			advice:  advice
+		}
+
+		const links = this.links.get( concern );
+		links ? links.push( link )
+			  : this.links.set( concern, [ link ] );
+
+		return link;
+	}
+
+	inspect<S extends T>( concern: S, content: Content<S> ): Content<T> {
+		let result  = Object.assign( {}, content )
+		const links = this.links.get( concern ) || []
+		for ( const link of links ) {
+			const update = link.advice( result )
+			if ( update ) {
+				result = { ...result, ...update }
+			}
+		}
 		return result
 	};
 
@@ -126,5 +171,9 @@ export function createBus<T extends { [ _: string ]: AnyTopic }>( topics: T ): M
 
 export function createIntercept<T extends { [ _: string ]: AnyConcern }>( concerns: T ): Intercept<T[keyof T]> {
 	return new Intercept();
+}
+
+export function createInterceptModified<T extends { [ _: string ]: AnyConcern }>( concerns: T ): ModifiedIntercept<T[keyof T]> {
+	return new ModifiedIntercept();
 }
 

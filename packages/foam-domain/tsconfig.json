@@ -4,6 +4,7 @@
     "src"
   ],
   "compilerOptions": {
-    "outDir": "out"
+    "outDir": "out",
+    "strict": true
   }
 }

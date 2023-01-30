@@ -7,15 +7,10 @@
     "baseUrl": ".",
     "module": "commonjs",
     "target": "ES2019",
-     "moduleResolution": "node",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "lib": ["ES2019", "es2020.string"],
     "composite": true,
-    "strict": true,
-    "paths": {
-      "foam-core": ["./packages/foam-core/src"],
-      "foam-vscode": ["./packages/foam-vscode/src"]
-      "foam-domain": ["./packages/foam-domain/src"]
-    }
+    "strict": true
   }
 }

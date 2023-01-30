@@ -1,5 +1,6 @@
-export declare const brand: unique symbol;
 // Synchronous handling
+import { brand } from "./types";
+
 type CorcernTopic<K> = { name: Symbol, [ brand ]: "Concern" }
 type AnyConcern = CorcernTopic<any>
 type Content<K> = K extends CorcernTopic<infer X> ? Readonly<X> : never
@@ -111,7 +112,7 @@ type Subscription = {
 	id: symbol; topic: AnyTopic; subscribed: Consumer<any>;
 }
 
-class MessageBus<T extends AnyTopic> {
+export class MessageBus<T extends AnyTopic> {
 
 	private subscriptions: Map<AnyTopic, Subscription[]>;
 

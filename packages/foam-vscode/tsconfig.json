@@ -3,7 +3,12 @@
   "compilerOptions": {
     "outDir": "out",
     "strict": false,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "foam-domain/*": ["../foam-domain/src/*"]
+    }
   },
   "include": ["src", "types"],
   "exclude": ["node_modules", ".vscode-test"]

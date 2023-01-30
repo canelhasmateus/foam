@@ -267,7 +267,7 @@ const createFnForOnFileExistsStrategy = (
 };
 
 export const NoteFactory = {
-  createNote: async (
+ createNote: async (
     newFilePath: URI,
     text: string,
     resolver: Resolver,

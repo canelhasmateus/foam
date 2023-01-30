@@ -18,8 +18,7 @@ export async function activate(context: ExtensionContext) {
   exposeLogger(context, logger);
 
   try {
-    Logger.info('Starting Foam');
-
+    Logger.info('Starting Foammmmmmmmmm');
     if (workspace.workspaceFolders === undefined) {
       Logger.info('No workspace open. Foam will not start');
       return;

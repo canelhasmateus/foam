@@ -57,7 +57,7 @@ export class Resolver implements VariableResolver {
    * @returns an array, where the first element is the resolution map,
    *          and the second is the processed text
    */
-  async resolveText(text: string): Promise<string> {
+  resolveText = async(text: string): Promise<string> => {
     let snippet = new SnippetParser().parse(text, false, false);
     let foamVariablesInTemplate = new Set(
       snippet

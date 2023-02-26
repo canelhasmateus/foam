@@ -14,7 +14,6 @@ export interface NoteEngine {
 	createNote: ( context: NoteCreation ) => Promise<NoteCreationResult>
 }
 
-
 export type CreationSuccess = {
 	context: NoteCreation
 	note: FoamNote

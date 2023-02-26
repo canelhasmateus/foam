@@ -14,15 +14,15 @@ export interface Template {
 }
 
 // Metadata
-type KnownAttribute = {
+type KnownAttributes = {
 	name: Unresolved,
 	description: Unresolved,
 	filepath: Unresolved
 }
-type Attribute<K> = From<KnownAttribute, K, string>
+type Attribute<K> = From<KnownAttributes, K, string>
 
 export interface TemplateMetadata {
-	get: <K extends keyof KnownAttribute | string>( key: K ) => Attribute<K>
+	get: <K extends keyof KnownAttributes | string>( key: K ) => Attribute<K>
 }
 
 

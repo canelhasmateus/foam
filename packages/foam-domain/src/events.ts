@@ -154,10 +154,6 @@ export class MessageBus<T extends AnyTopic> {
 }
 
 //
-
-type Bag<T> = T[keyof T] extends infer K ? K : never
-
-
 export function createMessageTopic<K>(): MessageTopic<K> {
 	return { name: Symbol() } as unknown as MessageTopic<K>
 }

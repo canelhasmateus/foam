@@ -1,5 +1,5 @@
-import { Absolute, Document, Glob, ReadResult, WriteResult } from "./features/files";
-import { EditingContext } from "./features/editor";
+import { Absolute, Glob, ReadResult, WriteResult } from "./features/files";
+import { Document, EditingContext } from "./features/editor";
 
 export enum System {
 	Settings,

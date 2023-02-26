@@ -1,7 +1,6 @@
 import { createIntercept, createConcernTopic } from "./events";
 import { describe, expect, it, test } from "@jest/globals";
 
-
 type CurrencyRates = {
 	USD: number;
 	EUR: number;
@@ -12,7 +11,6 @@ type TransactionData = {
 	buyer: string;
 	price: number;
 }
-
 
 describe( "Concerns", () => {
 
@@ -78,6 +76,3 @@ describe( "Concerns", () => {
 
 
 } )
-
-
-

@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import { asAbsoluteUri, URI } from '../core/model/uri';
-import { TextEncoder } from 'util';
+import { TextDecoder, TextEncoder } from 'util';
 import {
   FileType,
   RelativePattern,
@@ -101,7 +101,7 @@ export async function fileExists(uri: URI): Promise<boolean> {
   try {
     const stat = await workspace.fs.stat(toVsCodeUri(uri));
     return stat.type === FileType.File;
-  } catch (e) {
+  } catch ( e ) {
     return false;
   }
 }

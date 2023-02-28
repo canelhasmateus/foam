@@ -7,8 +7,12 @@
     "lib": ["ES2019", "es2020.string", "DOM"],
     "sourceMap": true,
     "strict": false,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "paths": {
+      "foam-domain/*": ["../foam-domain/src/*"]
+    }
   },
   "include": ["src", "types"],
-  "exclude": ["node_modules", ".vscode-test"]
+  "exclude": ["node_modules", ".vscode-test"],
+  "references": [{"path": "../foam-domain"}]
 }

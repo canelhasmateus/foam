@@ -2,8 +2,8 @@
   "name": "foam-domain",
   "version": "0.0.1",
   "license": "MIT",
-  "module": "out/*.js",
-  "types": "out/index.d.ts",
+  "main": "out/src/index.js",
+  "types": "out/src/index.d.ts",
   "scripts": {
     "build": "tsc -p ./",
     "test": "jest --testMatch \"**/*.test.ts\"",

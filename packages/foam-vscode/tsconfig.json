@@ -1,18 +1,25 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./../../tsconfig.module.json",
   "compilerOptions": {
+    "rootDir": ".",
     "moduleResolution": "node",
-    "esModuleInterop": true,
     "outDir": "out",
     "lib": ["ES2019", "es2020.string", "DOM"],
-    "sourceMap": true,
     "strict": false,
     "downlevelIteration": true,
-    "paths": {
-      "foam-domain/*": ["../foam-domain/src/*"]
-    }
+    "baseUrl": "."
   },
-  "include": ["src", "types"],
-  "exclude": ["node_modules", ".vscode-test"],
-  "references": [{"path": "../foam-domain"}]
+  "include": [
+    "src",
+    "types"
+  ],
+  "exclude": [
+    "node_modules",
+    ".vscode-test"
+  ],
+  "references": [
+    {
+      "path": "../foam-domain"
+    }
+  ]
 }

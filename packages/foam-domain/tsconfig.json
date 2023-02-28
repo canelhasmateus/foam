@@ -1,11 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./../../tsconfig.module.json",
+  "references": [],
   "include": [
-    "src"
+    "src/**/*"
   ],
   "compilerOptions": {
+    "rootDir": ".",
     "outDir": "out",
-    "strict": true,
-    "composite": true
+    "lib": ["es2019"]
   }
 }

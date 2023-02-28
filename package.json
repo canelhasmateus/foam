@@ -27,11 +27,6 @@
   "engines": {
     "node": ">=18"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
   "prettier": {
     "arrowParens": "avoid",
     "printWidth": 80,

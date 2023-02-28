@@ -21,7 +21,8 @@
   "activationEvents": [
     "workspaceContains:.vscode/foam.json"
   ],
-  "main": "./out/extension.js",
+  "main": "out/src/extension.js",
+  "types": "out/src/extension.d.ts",
   "capabilities": {
     "untrustedWorkspaces": {
       "supported": "limited",
@@ -506,9 +507,9 @@
     "wait-for-expect": "^3.0.2"
   },
   "dependencies": {
-    "foam-domain": "0.0.1",
     "dateformat": "^3.0.3",
     "detect-newline": "^3.1.0",
+    "foam-domain": "^0.0.1",
     "github-slugger": "^1.4.0",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.21",
@@ -527,5 +528,6 @@
     "publisherDisplayName": "Foam",
     "publisherId": "34339645-24f0-4619-9917-12157fd92446",
     "isPreReleaseVersion": false
-  }
+  },
+  "references": [{"path" :  "../foam-domain"}]
 }

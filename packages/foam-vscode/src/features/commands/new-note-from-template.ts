@@ -1,10 +1,10 @@
-import { FoamResourceProvider, } from "foam-domain/components";
+import { FoamResourceProvider, } from "foam-domain";
 import { commands, ExtensionContext, QuickPickItem, Uri, window, workspace } from "vscode";
 import { FoamFeature } from "../../types";
-import { createNoteFromTemplate, listTemplates, NoteTemplate, resolveContent, resolveDestinations, Unresolved, VariableExpansor } from "foam-domain/features/templates";
-import { Optional } from "foam-domain/types";
+import { createNoteFromTemplate, listTemplates, NoteTemplate, resolveContent, resolveDestinations, Unresolved, VariableExpansor } from "foam-domain";
+import { Optional } from "foam-domain";
 import { TextDecoder, TextEncoder } from "util";
-import { Absolute, Glob, ReadResult, WriteResult } from "foam-domain/features/files";
+import { Absolute, Glob, ReadResult, WriteResult } from "foam-domain";
 
 const decoder = new TextDecoder('utf-8');
 const encoder = new TextEncoder();

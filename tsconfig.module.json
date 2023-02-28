@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "isolatedModules": true,
+    "incremental": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "sourceMap": true
+  }
+}

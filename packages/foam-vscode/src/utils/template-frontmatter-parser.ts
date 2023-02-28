@@ -1,8 +1,6 @@
 import matter from 'gray-matter';
 
-export function extractFoamTemplateFrontmatterMetadata(
-  contents: string
-): [Map<string, string>, string] {
+export function extractFoamTemplateFrontmatterMetadata(contents: string): [Map<string, string>, string] {
   // Need to pass in empty options object, in order to bust a cache
   // See https://github.com/jonschlinkert/gray-matter/issues/124
   const parsed = matter(contents, {});

@@ -1,0 +1,20 @@
+{
+  "exclude": [
+    "packages/**/tests/**",
+    "packages/**/out/**"
+  ],
+  "references": [
+    {"path" :  "packages/foam-vscode"},
+    {"path" :  "packages/foam-domain"}
+  ],
+  "compilerOptions": {
+    "incremental": true,
+    "noEmit": true,
+    "outDir": "./out",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "downlevelIteration": true
+  }
+}

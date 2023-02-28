@@ -2,7 +2,6 @@ import { brand, From, Optional, Sourced } from "../types";
 import { Absolute } from "./files";
 import { createNote, CreateNoteResult } from "./note";
 import { FoamResourceProvider } from "../components";
-import { extractFoamTemplateFrontmatterMetadata } from "foam-vscode/src/utils/template-frontmatter-parser";
 
 export type Unresolved = { [brand]: "Unresolved" }
 
@@ -45,10 +44,14 @@ type KnownAttributes = {
 }
 
 // Actions
+function parseMetadata(content: string) {
+  return [new Map(), ""]
+}
+
 export async function readTemplate(fileSystem: FoamResourceProvider, location: Absolute): Promise<NoteTemplate> {
 
   return fileSystem.read(location).then(s => {
-    const [attributes, content] = extractFoamTemplateFrontmatterMetadata(location)
+    const [attributes, content] = parseMetadata(location)
     return {
       // todo
       content: content as unknown as Unresolved,
@@ -60,7 +63,6 @@ export async function readTemplate(fileSystem: FoamResourceProvider, location: A
 
 export async function listTemplates(fileSystem: FoamResourceProvider): Promise<NoteTemplate[]> {
   return fileSystem.find('.foam/templates/**.md').then(locations => {
-    console.log(locations);
     return Promise.all(
       locations.map(loc => readTemplate(fileSystem, loc))
     )

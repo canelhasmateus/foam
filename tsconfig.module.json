@@ -1,4 +1,12 @@
 {
+  "exclude": [
+    "packages/**/tests/**",
+    "packages/**/out/**"
+  ],
+  "references": [
+    {"path" :  "packages/foam-vscode"},
+    {"path" :  "packages/foam-domain"}
+  ],
   "compilerOptions": {
     "composite": true,
     "noEmit": false,
@@ -10,6 +18,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "declarationMap": true,
-    "target": "ES2019"
+    "target": "ES2019",
+    "module": "CommonJS"
   }
 }

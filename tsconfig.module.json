@@ -9,6 +9,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "target": "ES2019"
   }
 }

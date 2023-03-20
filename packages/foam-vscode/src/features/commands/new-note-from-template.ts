@@ -10,21 +10,22 @@ const decoder = new TextDecoder('utf-8');
 const encoder = new TextEncoder();
 
 class VsFileSystem implements FoamResourceProvider {
+
   find(include: Glob, exclude: Glob | undefined): Promise<Absolute[]> {
     return workspace.findFiles(include, exclude)
       .then(all => {
-        return all.map(l => this.normalize(l.toString()))
+        return all.map(el => this.normalize(el.toString()));
       }) as unknown as Promise<Absolute[]>; // todo
   }
 
   read(location: Absolute): Promise<ReadResult> {
     return workspace.fs.readFile(Uri.parse(location.toString()))
       .then(array => {
-          return {
-            success: true,
-            content: decoder.decode(array)
-          }
+        return {
+          success: true,
+          content: decoder.decode(array)
         }
+      }
       ) as unknown as Promise<ReadResult> // todo
   }
 
@@ -61,8 +62,8 @@ async function chooseTemplate(templates: NoteTemplate[]): Promise<Optional<NoteT
     return {
       location: t.location,
       description: t.location?.toString() || "",
-      label: t.metadata.get("name").toString() || "",
-      detail: t.metadata.get("description").toString() || ""
+      label: t.metadata.get("name")?.toString() || "",
+      detail: t.metadata.get("description")?.toString() || ""
     } satisfies Item
   });
 
@@ -81,19 +82,29 @@ const feature: FoamFeature = {
     context.subscriptions.push(
       commands.registerCommand('foam-vscode.create-note-from-template', async () => {
 
-          const all = await listTemplates(fileSystem);
-          if (all.length === 0) {
-            return;
-          }
-
-          const chosen = await chooseTemplate(all)
-          if (chosen) {
-            const destinations = await resolveDestinations(resolver, chosen)
-            const contents = await resolveContent(resolver, chosen)
-            return await createNoteFromTemplate(fileSystem, chosen, destinations, contents)
-          }
-
+        const all = await listTemplates(fileSystem);
+        if (all.length === 0) {
+          return;
         }
+
+        const chosen = await chooseTemplate(all)
+        if (!chosen) {
+          return
+        }
+
+        let destinations = await resolveDestinations(resolver, chosen)
+        while (!destinations || destinations.length == 0) {
+          let choice = await window.showInputBox({
+            prompt: `No possible destination found. Enter the path for the new note`,
+            value: "",
+          })
+          destinations = [choice]
+        }
+
+        const contents = await resolveContent(resolver, chosen)
+        return await createNoteFromTemplate(fileSystem, chosen, destinations, contents)
+      }
+
       ));
   }
 };
